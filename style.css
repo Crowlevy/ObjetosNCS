@@ -1,0 +1,247 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
+#randomImage {
+    max-width: 375px;
+    max-height: 375px;
+    margin: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    display: none;
+}
+
+#timer {
+    position: fixed;
+    top: 20px;
+    font-size: 24px;
+    font-family: monospace;
+    visibility: hidden;
+}
+
+button {
+    padding: 15px 60px;
+    font-size: 18px;
+    background: linear-gradient(135deg, #6b6bff, #8a6bff);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.26);
+    outline: none; 
+    z-index: 100;
+}
+button:hover {
+    background: linear-gradient(135deg, #8a6bff, #6b6bff); 
+    transform: translateY(-2px); 
+}
+
+button:active {
+    transform: translateY(1px); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+#generateButton, #editButton, #muteButton {
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+}
+
+#generateButton {
+    position: fixed;
+    bottom: 20px;
+}
+
+#editButton {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #2196F3;
+}
+
+#muteButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff4444;
+}
+#editButton:hover {
+    background: rgb(7, 104, 184); 
+}
+
+#muteButton:hover {
+    background: rgba(255, 68, 68, 0.1);
+}
+
+#muteButton:hover {
+    background: #cc3333;
+}
+
+.audio-player {
+    margin: 20px;
+    visibility: hidden;
+    position: fixed;
+    bottom: -100px;
+}
+
+.edit-menu {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.edit-menu select {
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.edit-menu label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.edit-menu input[type="file"] {
+    width: 200px;
+    margin: 10px;
+    padding: 5px;
+}
+
+.reset-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.reset-button:hover {
+    background: #cc3333;
+}
+
+#applyButton {
+    background: #2196F3;
+    margin-top: 20px;
+}
+
+#applyButton:hover {
+    background: #1976D2;
+}
+
+#delayInputContainer {
+    margin: 10px;
+}
+
+#delayInput {
+    width: 100px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-container {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.search-input {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 5px rgba(33, 150, 243, 0.3);
+}
+
+.hidden-option {
+    display: none !important;
+}
+
+optgroup {
+    font-weight: bold;
+    font-style: normal;
+    background: #f5f5f5;
+    padding: 5px;
+}
+
+optgroup option {
+    font-weight: normal;
+    padding-left: 15px;
+    background: white;
+}
+
+.counter-container {
+    margin-top: 20px;
+    font-size: 14px;
+}
+@media (max-width: 768px) {
+    button {
+        padding: 15px 5vw; 
+        font-size: 16px;
+    }
+
+    #randomImage {
+        max-width: 80%; 
+    }
+
+    .edit-menu select,
+    .edit-menu input[type="file"] {
+        width: 80%;
+    }
+
+    .search-input {
+        width: 80%; 
+    }
+}
+
+@media (max-width: 480px) {
+    #timer {
+        font-size: 20px; 
+    }
+
+    button {
+        padding: 10px 4vw; 
+        font-size: 14px; 
+    }
+}
