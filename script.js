@@ -1,4 +1,3 @@
-alert("Espere até o drop da música para ver o que há de melhor")
 function populateSelectMenus() {
     const imageSelect = document.getElementById('imageSelect');
     const soundSelect = document.getElementById('soundSelect');
