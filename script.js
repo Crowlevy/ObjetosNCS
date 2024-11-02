@@ -1,4 +1,3 @@
-
 function populateSelectMenus() {
     const imageSelect = document.getElementById('imageSelect');
     const soundSelect = document.getElementById('soundSelect');
