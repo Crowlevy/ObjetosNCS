@@ -2,11 +2,11 @@
 function populateSelectMenus() {
     const imageSelect = document.getElementById('imageSelect');
     const soundSelect = document.getElementById('soundSelect');
-    
+
     //limpar as opções podres
     imageSelect.innerHTML = '';
     soundSelect.innerHTML = '';
-    
+
     //grupo de imagens - melhorar isso com categorias próprias
     const categorizedImages = {};
     images.forEach(image => {
@@ -15,7 +15,7 @@ function populateSelectMenus() {
         }
         categorizedImages[image.category].push(image);
     });
-    
+
     //ordenação por categoria(manjo muito)
     const categoryOrder = [];
     images.forEach(image => {
@@ -27,25 +27,26 @@ function populateSelectMenus() {
     categoryOrder.forEach(category => {
         const optgroup = document.createElement('optgroup');
         optgroup.label = category;
-        
+
         categorizedImages[category].forEach(image => {
             const option = document.createElement('option');
             option.value = image.src;
             option.textContent = image.name;
             optgroup.appendChild(option);
         });
-        
+
         imageSelect.appendChild(optgroup);
     });
-    
+
     //adicionar sons com a imagem
     sounds.forEach(sound => {
         const option = document.createElement('option');
         option.value = sound.src;
         option.textContent = sound.name;
+        option.textContent = `${sound.name} (Delay: ${sound.delay} s)`;
         soundSelect.appendChild(option);
     });
-    
+
     updateCounts();
     setupSearch();
 }
@@ -61,12 +62,12 @@ function updateCounts() {
 function setupSearch() {
     const imageSearch = document.getElementById('imageSearch');
     const soundSearch = document.getElementById('soundSearch');
-    
-    imageSearch.addEventListener('input', function() {
+
+    imageSearch.addEventListener('input', function () {
         filterOptions('imageSelect', this.value);
     });
-    
-    soundSearch.addEventListener('input', function() {
+
+    soundSearch.addEventListener('input', function () {
         filterOptions('soundSelect', this.value);
     });
 }
@@ -74,17 +75,17 @@ function setupSearch() {
 function filterOptions(selectId, searchText) {
     const select = document.getElementById(selectId);
     const searchTerms = searchText.toLowerCase().split(' ');
-    
+
     if (selectId === 'imageSelect') {
         const optgroups = select.getElementsByTagName('optgroup');
         for (let optgroup of optgroups) {
             let visibleOptions = 0;
             const options = optgroup.getElementsByTagName('option');
-            
+
             for (let option of options) {
                 const text = option.textContent.toLowerCase();
                 const matchesAll = searchTerms.every(term => text.includes(term));
-                
+
                 if (matchesAll) {
                     option.classList.remove('hidden-option');
                     visibleOptions++;
@@ -92,7 +93,7 @@ function filterOptions(selectId, searchText) {
                     option.classList.add('hidden-option');
                 }
             }
-            
+
             optgroup.style.display = visibleOptions > 0 ? '' : 'none';
         }
     } else {
@@ -100,7 +101,7 @@ function filterOptions(selectId, searchText) {
         for (let option of options) {
             const text = option.textContent.toLowerCase();
             const matchesAll = searchTerms.every(term => text.includes(term));
-            
+
             if (matchesAll) {
                 option.classList.remove('hidden-option');
             } else {
@@ -133,13 +134,12 @@ function handleFileUpload(file, type) {
 async function applyCustomPairing() {
     let selectedImageSrc = document.getElementById('imageSelect').value;
     let selectedSoundSrc = document.getElementById('soundSelect').value;
-    
-    // Handle image upload if present
+
     const imageFile = document.getElementById('imageUpload').files[0];
     if (imageFile) {
         selectedImageSrc = await handleFileUpload(imageFile, 'image');
     }
-    
+
     const soundFile = document.getElementById('soundUpload').files[0];
     if (soundFile) {
         selectedSoundSrc = await handleFileUpload(soundFile, 'audio');
@@ -153,33 +153,33 @@ async function applyCustomPairing() {
     } else {
         currentSound = sounds.find(sound => sound.src === selectedSoundSrc);
     }
-    
+
     hideImage();
-    
+
     if (currentImageTimeout) {
         clearTimeout(currentImageTimeout);
     }
-    
+
     if (timerInterval) {
         clearInterval(timerInterval);
     }
     document.getElementById('timer').textContent = "0.00";
-    
+
     const imgElement = document.getElementById('randomImage');
     imgElement.src = selectedImageSrc;
-    
+
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = selectedSoundSrc;
-    
+
     audioPlayer.load();
     audioPlayer.play().catch(error => {
         console.log("Audio playback failed:", error);
     });
-    
+
     toggleEditMenu();
 }
 
-document.getElementById('soundUpload').addEventListener('change', function(e) {
+document.getElementById('soundUpload').addEventListener('change', function (e) {
     const delayContainer = document.getElementById('delayInputContainer');
     if (e.target.files.length > 0) {
         delayContainer.style.display = 'block';
@@ -190,15 +190,15 @@ document.getElementById('soundUpload').addEventListener('change', function(e) {
 
 function resetImageUpload() {
     const imageUpload = document.getElementById('imageUpload');
-    imageUpload.value = ''; 
-    document.getElementById('imageSelect').selectedIndex = 0; 
+    imageUpload.value = '';
+    document.getElementById('imageSelect').selectedIndex = 0;
 }
 
 function resetSoundUpload() {
     const soundUpload = document.getElementById('soundUpload');
-    soundUpload.value = ''; 
-    document.getElementById('soundSelect').selectedIndex = 0; 
-    document.getElementById('delayInputContainer').style.display = 'none'; 
+    soundUpload.value = '';
+    document.getElementById('soundSelect').selectedIndex = 0;
+    document.getElementById('delayInputContainer').style.display = 'none';
 }
 
 function getRandomElement(array) {
@@ -224,7 +224,7 @@ let currentImageTimeout;
 function toggleMute() {
     const audioPlayer = document.getElementById('audioPlayer');
     const muteButton = document.getElementById('muteButton');
-    
+
     if (audioPlayer.muted) {
         audioPlayer.muted = false;
         muteButton.textContent = "Mute";
@@ -239,11 +239,11 @@ function toggleMute() {
 function startTimer(delay) {
     let startTime = Date.now();
     const timerElement = document.getElementById('timer');
-    
+
     if (timerInterval) {
         clearInterval(timerInterval);
     }
-    
+
     timerInterval = setInterval(() => {
         let elapsedTime = (Date.now() - startTime) / 1000;
         if (elapsedTime >= delay) {
@@ -259,33 +259,33 @@ function generateRandomPairing() {
     if (currentImageTimeout) {
         clearTimeout(currentImageTimeout);
     }
-    
+
     hideImage();
-    
+
     if (timerInterval) {
         clearInterval(timerInterval);
     }
     document.getElementById('timer').textContent = "0.00";
-    
+
     const randomImage = getRandomElement(images);
     currentSound = getRandomElement(sounds);
-    
+
     const imgElement = document.getElementById('randomImage');
     imgElement.src = randomImage.src;
-    
+
     const audioPlayer = document.getElementById('audioPlayer');
     audioPlayer.src = currentSound.src;
-    
+
     audioPlayer.load();
     audioPlayer.play().catch(error => {
         console.log("Audio playback failed:", error);
     });
 }
 
-window.onload = function() {
+window.onload = function () {
     const audioPlayer = document.getElementById('audioPlayer');
-    
-    audioPlayer.addEventListener('play', function() {
+
+    audioPlayer.addEventListener('play', function () {
         if (currentSound) {
             startTimer(currentSound.delay);
             currentImageTimeout = setTimeout(showImage, currentSound.delay * 1000);
@@ -293,20 +293,20 @@ window.onload = function() {
     });
 
     generateRandomPairing();
-    
-    document.addEventListener('click', function() {
+
+    document.addEventListener('click', function () {
         audioPlayer.play().catch(error => {
             console.log("Audio playback failed:", error);
         });
     });
 };
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     //trigger de espaço caso não esteja digitando um texto
     const activeElement = document.activeElement;
-    const isTyping = activeElement.tagName === 'INPUT' && 
-                     activeElement.type === 'text';
-    
+    const isTyping = activeElement.tagName === 'INPUT' &&
+        activeElement.type === 'text';
+
     if (event.code === 'Space' && !isTyping) {
         generateRandomPairing();
         event.preventDefault();
